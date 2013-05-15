@@ -32,16 +32,14 @@ nav.findDirection = function()
 end
 
 nav.toDirection = function(dir)
-  turns = math.abs(nav.direction - dir)
-  if (nav.direction + turns) % 4 == dir then
-    spin = turtle.turnRight
-  else 
-    spin = turtle.turnLeft
+  nav.rotate(dir - nav.direction)
+end
+
+nav.rotate = function(offset)
+  spin = {[false] = turtle.turnLeft, [true] = turtle.turnRight}
+  for i = 1,math.abs(offset),1 do
+    spin[offset>0]()
   end
-  for i = 1,turns,1 do
-    spin()
-  end
-  nav.direction = dir
 end
 
 nav.moveTo = function(tx, ty, tz)
