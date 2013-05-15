@@ -1,7 +1,4 @@
-local position
-
-function returnToStart()
-  
+os.loadAPI("aran/navigation")
 
 function ensureInventory()
   for i = 1,16,1 do
@@ -18,6 +15,7 @@ args = {...}
 -- open pattern file
 
 function buildPattern(filename)
+  x,y,z = gps.locate()
   file = fs.open(filename, 'r')
 
   line = file.readLine()
@@ -27,13 +25,13 @@ function buildPattern(filename)
     n = #line
     if i % 2 > 0 then
       line = string.reverse(line)
-      turtle.turnRight()
+      nav.rotate(1)
       turtle.forward()
-      turtle.turnRight()
+      nav.rotate(1)
     elseif i > 0 then
-      turtle.turnLeft()
+      nav.rotate(-1)
       turtle.forward()
-      turtle.turnLeft()
+      nav.rotate(-1)
     end
     for j = 1, #line, 1 do
       if j > 1 then
@@ -47,23 +45,9 @@ function buildPattern(filename)
     line = file.readLine()
     i = i + 1
   end
-  if i % 2 > 0 then
-    for j = 1, n - 1, 1 do
-      turtle.back()
-    end
-  else
-    turtle.turnLeft()
-    turtle.turnLeft()
-  end
-  turtle.turnRight()
-  for j = 1, i-1, 1 do
-    turtle.back()
-  end
-  turtle.turnLeft()
-  turtle.up()  
+  nav.moveTo(x,y+1,z)
   file.close()
 end
-
 
 for i = 1,tonumber(args[2]),1 do
   buildPattern(args[1])
