@@ -7,7 +7,8 @@ function ensureInventory()
       return
     end
   end
-  error("Empty.")
+  print("Empty.")
+  return false
 end
 
 args = {...}
@@ -21,31 +22,31 @@ function buildPattern(filename)
   line = file.readLine()
   i = 0
   n = 0
-  while line ~= nil do
+  while ensureInventory and line ~= nil do
     n = #line
     if i % 2 > 0 then
       line = string.reverse(line)
-      nav.rotate(1)
+      navigation.rotate(1)
       turtle.forward()
-      nav.rotate(1)
+      navigation.rotate(1)
     elseif i > 0 then
-      nav.rotate(-1)
+      navigation.rotate(-1)
       turtle.forward()
-      nav.rotate(-1)
+      navigation.rotate(-1)
     end
     for j = 1, #line, 1 do
       if j > 1 then
         turtle.forward()
       end
       if string.sub(line,j,j) == '#' then
-        ensureInventory()
+        if not ensureInventory() then break end
         turtle.placeDown()
       end
     end
     line = file.readLine()
     i = i + 1
   end
-  nav.moveTo(x,y+1,z)
+  navigation.moveTo(x,y+1,z)
   file.close()
 end
 
