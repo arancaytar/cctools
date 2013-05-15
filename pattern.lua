@@ -27,16 +27,20 @@ function buildPattern(filename)
     if i % 2 > 0 then
       line = string.reverse(line)
       navigation.rotate(1)
-      turtle.forward()
+      if not turtle.forward() then break end
       navigation.rotate(1)
     elseif i > 0 then
       navigation.rotate(-1)
-      turtle.forward()
+      if not turtle.forward() then break end
       navigation.rotate(-1)
     end
     for j = 1, #line, 1 do
       if j > 1 then
-        turtle.forward()
+        if not turtle.forward() then 
+          navigation.moveTo(x,y,z)
+          file.close()
+          return false
+        end
       end
       if string.sub(line,j,j) == '#' then
         if not ensureInventory() then break end
