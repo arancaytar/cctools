@@ -5,6 +5,7 @@ function checkInventory()
       return true
     end
   end
+  print("Empty inventory!")
   return false
 end
 
