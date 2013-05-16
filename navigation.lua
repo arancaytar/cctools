@@ -35,6 +35,8 @@ function turnTo(dir)
 end
 
 function rotate(offset)
+  offset = (4 + offset) % 4
+  if offset == 3 then offset = -1 end
   spin = {[false] = turtle.turnLeft, [true] = turtle.turnRight}
   for i = 1,math.abs(offset),1 do
     spin[offset>0]()
