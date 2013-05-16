@@ -1,9 +1,9 @@
 directions = {N=0, E=1, S=2, W=3}
 direction = nil
 
--- direction-finder: find an open direction, move a step,
--- use gps to determine which way we are moving.
-findDirection = function()
+-- robust direction-finder: find an open direction, move a step,
+-- use gps to determine which way we moved.
+function findDirection()
   x,y,z = gps.locate()
   if x == nil then
     print("Error: GPS unavailable.")
@@ -30,11 +30,11 @@ findDirection = function()
   return direction
 end
 
-toDirection = function(dir)
+function turnTo(dir)
   rotate(dir - direction)
 end
 
-rotate = function(offset)
+function rotate(offset)
   spin = {[false] = turtle.turnLeft, [true] = turtle.turnRight}
   for i = 1,math.abs(offset),1 do
     spin[offset>0]()
@@ -42,16 +42,16 @@ rotate = function(offset)
   direction = (direction + offset + 4) % 4
 end
 
-moveTo = function(tx, ty, tz)
+function moveTo(tx, ty, tz)
   x,y,z = gps.locate()
   while x ~= tx or y ~= ty or z ~= tz do
     if y < ty then m=turtle.up()
     elseif y > ty then m=turtle.down()
     else
-      if x > tx then toDirection(directions.W)
-      elseif x < tx then toDirection(directions.E)
-      elseif z < tz then toDirection(directions.S)
-      else toDirection(directions.N) end
+      if x > tx then turnTo(directions.W)
+      elseif x < tx then turnTo(directions.E)
+      elseif z < tz then turnTo(directions.S)
+      else turnTo(directions.N) end
       m=turtle.forward()
     end
     if not m then error("I'm stuck!") end
@@ -59,7 +59,7 @@ moveTo = function(tx, ty, tz)
   end
 end
   
-init = function()
+function init()
   findDirection()
 end
 
