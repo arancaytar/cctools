@@ -78,7 +78,7 @@ function buildPattern(matrix, count)
   f = navigation.direction
   mapped = mapPositions(x, z, f, matrixToPositions(matrix))
   for i = 0,count-1,1 do
-    tasks = copyPositions(positions)
+    tasks = copyPositions(mapped)
     buildPositions(y+i, tasks)
   end
 end
