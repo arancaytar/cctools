@@ -1,11 +1,12 @@
 os.loadAPI("aran/navigation")
-os.loadAPI("aran/strings")
+os.loadAPI("aran/placer")
+os.loadAPI("aran/astring")
 
 -- reads a boolean matrix and returns an array of true positions.
 function matrixToPositions(matr)
   positions = {}
-  for i = 1,#matr,do
-    for j = 1,#(matr[i]),do
+  for i = 1,#matr,1 do
+    for j = 1,#(matr[i]),1 do
       if matr[i][j] then
         -- in coordinate systems, the horizontal index precedes.
         table.insert(positions, {i, j})
@@ -65,12 +66,8 @@ function buildPositions(y, realPositions)
   n = #realPositions
   while n > 0 do
     x, z = realPositions[n]
-    while not navigation.moveTo(x,y,z)
-      sleep(10)
-    end
-    while not placer.checkInventory()
-      sleep(10)
-    end
+    while not navigation.moveTo(x,y,z) do sleep(10) end
+    while not placer.checkInventory() do sleep(10) end
     turtle.placeDown()
     table.remove(realPositions)
     table.sort(x, z, realPositions)
@@ -91,7 +88,7 @@ end
 
 function loadPattern(filename)
   data = fs.open(filename, 'r').readAll()
-  lines = string.lines(data)
+  lines = astring.lines(data)
   matrix = {}
   for i = 1,#lines,1 do
     matrix[i] = {}
@@ -101,4 +98,3 @@ function loadPattern(filename)
   end
   return matrix
 end
-  
