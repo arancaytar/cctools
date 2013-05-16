@@ -4,10 +4,9 @@ function ensureInventory()
   for i = 1,16,1 do
     if turtle.getItemCount(i) > 0 then
       turtle.select(i)
-      return
+      return true
     end
   end
-  print("Empty.")
   return false
 end
 
@@ -26,24 +25,33 @@ function buildPattern(filename)
     n = #line
     if i % 2 > 0 then
       line = string.reverse(line)
-      navigation.rotate(1)
-      if not turtle.forward() then break end
-      navigation.rotate(1)
-    elseif i > 0 then
-      navigation.rotate(-1)
-      if not turtle.forward() then break end
-      navigation.rotate(-1)
     end
+    if i > 0 then
+      d = (i%2)*2 - 1
+      navigation.rotate(d)
+      if not turtle.forward() then
+        navigation.moveTo(x,y,z)
+        file.close()
+        error("Blocked.")
+      end
+      navigation.rotate(d)
+    end  
     for j = 1, #line, 1 do
       if j > 1 then
         if not turtle.forward() then 
           navigation.moveTo(x,y,z)
           file.close()
+          error("Blocked")
           return false
         end
       end
       if string.sub(line,j,j) == '#' then
-        if not ensureInventory() then break end
+        if not ensureInventory() then 
+          navigation.moveTo(x,y,z)
+          file.close()
+          error("Empty")
+          return false
+        end
         turtle.placeDown()
       end
     end
