@@ -55,7 +55,7 @@ function moveTo(tx, ty, tz)
       m=turtle.forward()
     end
     if not m then 
-      print("Stuck moving to "..x.." "..y.." "..z)
+      print("Stuck moving to "..tx.." "..ty.." "..tz)
       return false
     end
     x,y,z = gps.locate()
