@@ -54,9 +54,13 @@ function moveTo(tx, ty, tz)
       else turnTo(directions.N) end
       m=turtle.forward()
     end
-    if not m then error("I'm stuck!") end
+    if not m then 
+      print("Stuck moving to "..x.." "..y.." "..z)
+      return false
+    end
     x,y,z = gps.locate()
   end
+  return true
 end
   
 function init()

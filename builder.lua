@@ -21,20 +21,15 @@ end
 -- the other will be clockwise at a right angle.
 function mapPositions(x, z, direction, positions)
   mapped = {}
-  if direction == 0 then
-    for i,j in positions do
+  for a = 1,#positions,1 do
+    i,j = positions[a][1], positions[a][2]
+    if direction == 0 then
       table.insert(mapped, x+i, z-j)
-    end
-  elseif direction == 1 then
-    for i,j in positions do
+    elseif direction == 1 then
       table.insert(mapped, x+j, z+i)
-    end
-  elseif direction == 2 then
-    for i,j in positions do
+    elseif direction == 2 then
       table.insert(mapped, x-i, z+i)
-    end
-  elseif direction == 3 then
-    for i,j in positions do
+    elseif direction == 3 then
       table.insert(mapped, x-j, z-i)
     end
   end
@@ -43,7 +38,8 @@ end
 
 function copyPositions(positions)
   new = {}
-  for i,j in positions do
+  for a = 1,#positions,1 do
+    i,j = positions[a][1], positions[a][2]
     table.insert(new, {i,j})
   end
   return new
@@ -53,8 +49,8 @@ end
 -- removing elements from the end is faster.
 function proxSort(x, z, positions)
   sorter = function(p1, p2)
-    r1 = (p1[1]-x)^2 + (p1[2]-y)^2
-    r2 = (p2[1]-x)^2 + (p2[2]-y)^2
+    r1 = (p1[1]-x)^2 + (p1[2]-z)^2
+    r2 = (p2[1]-x)^2 + (p2[2]-z)^2
     return r1 > r2
   end
   return table.sort(positions, sorter)
@@ -65,7 +61,8 @@ end
 function buildPositions(y, realPositions)
   n = #realPositions
   while n > 0 do
-    x, z = realPositions[n]
+    x, z = realPositions[n][1], realPositions[n][2]
+      print("moving to "..x.." "..y.." "..z)
     while not navigation.moveTo(x,y,z) do sleep(10) end
     while not placer.checkInventory() do sleep(10) end
     turtle.placeDown()
@@ -92,7 +89,7 @@ function loadPattern(filename)
   matrix = {}
   for i = 1,#lines,1 do
     matrix[i] = {}
-    for j in 1,#(lines[i]),1 do
+    for j = 1,#lines[i],1 do
       matrix[i][j] = (string.sub(lines[i],j,j) == "#")
     end
   end
