@@ -22,7 +22,11 @@ function findDirection()
   x2,y2,z2 = gps.locate()
   -- binary arithmancy: NESW = (S|W)(W|E)
   movedDir = ((x2 + z < x + z2) and 1 or 0)*2 + ((x2 ~= x) and 1 or 0)
-  turtle.back()
+  while not turtle.back() do
+    -- this can happen when someone falls off the turtle.
+    print("Original position is now blocked; waiting.")
+    sleep(1)
+  end
   for j = 1,i,1 do
     turtle.turnLeft()
   end
