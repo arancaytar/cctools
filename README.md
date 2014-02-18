@@ -10,7 +10,7 @@ download it.
 
 On a local server, you can locate the disk folder of the target computer and copy the files directly.
 
-Failing all these, you can attempt to copy-paste the script, but this works poorly.
+Failing all these, you can attempt to paste the script into a computer terminal in-game, but this works poorly.
 
 Note: All scripts should be placed into a subfolder named "aran/" on the computer.
 
