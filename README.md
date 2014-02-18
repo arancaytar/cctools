@@ -24,9 +24,11 @@ and reproduce it in blocks, in a manner resembling a 3D printer.
 * The first row of the pattern is aligned with the turtle's initial orientation.
 * A functioning GPS signal must cover the entire area the turtle is to operate in. GPS satellites (consisting of four
   computers with wireless modems) are relatively easy to set up.
-  
+
+```
     usage:
       build <patternfile> <number of layers>
+```
 
 The turtle assumes and requires its maneuvering layer (directly above the build layer) to be free of obstructions, and
 multiple layers must be placed bottom to top. Each turtle can only build with one material (turtles cannot recognize
