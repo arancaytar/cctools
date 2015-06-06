@@ -136,7 +136,10 @@ if turbine ~= nil then turbine.setActive(false) end
 if reactor ~= nil then reactor.setActive(false) end
 
 --Write default engine status to all attached monitors
-monitor.clear()
+for i = 1, #connectedMonitors do
+    local monitor = peripheral.wrap(connectedMonitors[i])
+    monitor.clear()
+end
 if redstoneSide ~= "none" then
     for i = 1, #connectedMonitors do
         local monitor = peripheral.wrap(connectedMonitors[i])
