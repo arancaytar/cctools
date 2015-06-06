@@ -136,29 +136,30 @@ if turbine ~= nil then turbine.setActive(false) end
 if reactor ~= nil then reactor.setActive(false) end
 
 --Write default engine status to all attached monitors
-for i = 1, #connectedMonitors do
-    local monitor = peripheral.wrap(connectedMonitors[i])
-    if getMonitorSize(monitor.getSize()) == "large" then
-        monitor.clear()
-        monitor.setBackgroundColour((colours.grey))
-        monitor.setCursorPos(11,4)
-        monitor.write(" ON ")
-        monitor.setBackgroundColour((colours.green))
-        monitor.setCursorPos(15,4)
-        monitor.write(" OFF ")
-        monitor.setBackgroundColour((colours.black))
-    else
-        monitor.clear()
-        monitor.setBackgroundColour((colours.grey))
-        monitor.setCursorPos(1,4)
-        monitor.write(" ON ")
-        monitor.setBackgroundColour((colours.green))
-        monitor.setCursorPos(5,4)
-        monitor.write(" OFF ")
-        monitor.setBackgroundColour((colours.black))
+if redstoneSide ~= "none"
+    for i = 1, #connectedMonitors do
+        local monitor = peripheral.wrap(connectedMonitors[i])
+        if getMonitorSize(monitor.getSize()) == "large" then
+            monitor.clear()
+            monitor.setBackgroundColour((colours.grey))
+            monitor.setCursorPos(11,4)
+            monitor.write(" ON ")
+            monitor.setBackgroundColour((colours.green))
+            monitor.setCursorPos(15,4)
+            monitor.write(" OFF ")
+            monitor.setBackgroundColour((colours.black))
+        else
+            monitor.clear()
+            monitor.setBackgroundColour((colours.grey))
+            monitor.setCursorPos(1,4)
+            monitor.write(" ON ")
+            monitor.setBackgroundColour((colours.green))
+            monitor.setCursorPos(5,4)
+            monitor.write(" OFF ")
+            monitor.setBackgroundColour((colours.black))
+        end
     end
 end
-
 
 --Main loop
 while true do
