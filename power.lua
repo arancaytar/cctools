@@ -294,7 +294,7 @@ while true do
                 monitor.setCursorPos(13, 6)
             elseif fill >= 0.1 then
                 monitor.setCursorPos(14, 6)
-            else monitor.setCursorPos(15, 6)
+            else monitor.setCursorPos(15, 6) end
             monitor.write(string.format("%.3f%%", fill * 100))
         elseif getMonitorSize(monitor.getSize()) == "small" then
             --erase old data
