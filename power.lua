@@ -227,7 +227,7 @@ while true do
         local monitor=peripheral.wrap(connectedMonitors[i])
 
         if getMonitorSize(monitor.getSize()) == "large" then
-            monitor.setCursorPos(8, 1)
+            monitor.setCursorPos(9, 1)
             monitor.write("Power Status")
             --Erase old data
             monitor.setCursorPos(10,9)
