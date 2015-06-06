@@ -268,13 +268,13 @@ while true do
             for i = 1, math.ceil(fill * 10) do
                 monitor.setBackgroundColour((colours.green))
                 monitor.setCursorPos(24,12-i)
-                monitor.write(" ")
+                monitor.write("  ")
                 monitor.setBackgroundColour((colours.black))
             end
             for i = 1, 10 - math.ceil(fill * 10) do
                 monitor.setBackgroundColour((colours.red))
                 monitor.setCursorPos(24,1+i)
-                monitor.write(" ")
+                monitor.write("  ")
                 monitor.setBackgroundColour((colours.black))
             end
         elseif getMonitorSize(monitor.getSize()) == "small" then
@@ -284,8 +284,10 @@ while true do
             monitor.setCursorPos(10,5)
             monitor.write("       ")
             --write constant/new data
-            monitor.setCursorPos(2,2)
-            monitor.write("Engines:")
+            if redStoneSide ~= "none" then
+              monitor.setCursorPos(2,2)
+              monitor.write("Engines:")
+            end
             monitor.setCursorPos(11,2)
             monitor.write("Storage:")
             monitor.setCursorPos(eNowXSmall,3)
@@ -294,30 +296,32 @@ while true do
             monitor.write("of:")
             monitor.setCursorPos(eMaxXSmall,5)
             monitor.write(eMaxValue..eMaxSuffixSmall)
-            if fill > upper then
-                --Energy level is over upper level, turning redstone/reactors off
-                if redstoneSide ~= "none" then redstone.setOutput(redstoneSide, false) end
-                if turbine ~= nil then turbine.setActive(false) end
-                if reactor ~= nil then reactor.setActive(false) end
-                monitor.setBackgroundColour((colours.grey))
-                monitor.setCursorPos(1,4)
-                monitor.write(" ON ")
-                monitor.setBackgroundColour((colours.green))
-                monitor.setCursorPos(5,4)
-                monitor.write(" OFF ")
-                monitor.setBackgroundColour((colours.black))
-            elseif fill < lower then
-                --Energy level is below lower limit, turning redstone/reactors on
-                if redstoneSide ~= "none" then redstone.setOutput(redstoneSide, true) end
-                if turbine ~= nil then turbine.setActive(true) end
-                if reactor ~= nil then reactor.setActive(true) end
-                monitor.setBackgroundColour((colours.green))
-                monitor.setCursorPos(1,4)
-                monitor.write(" ON ")
-                monitor.setBackgroundColour((colours.grey))
-                monitor.setCursorPos(5,4)
-                monitor.write(" OFF ")
-                monitor.setBackgroundColour((colours.black))
+            if redstoneside ~= "none" then
+              if fill > upper then
+                  --Energy level is over upper level, turning redstone/reactors off
+                  redstone.setOutput(redstoneSide, false) end
+                  if turbine ~= nil then turbine.setActive(false) end
+                  if reactor ~= nil then reactor.setActive(false) end
+                  monitor.setBackgroundColour((colours.grey))
+                  monitor.setCursorPos(1,4)
+                  monitor.write(" ON ")
+                  monitor.setBackgroundColour((colours.green))
+                  monitor.setCursorPos(5,4)
+                  monitor.write(" OFF ")
+                  monitor.setBackgroundColour((colours.black))
+              elseif fill < lower then
+                  --Energy level is below lower limit, turning redstone/reactors on
+                  redstone.setOutput(redstoneSide, true) end
+                  if turbine ~= nil then turbine.setActive(true) end
+                  if reactor ~= nil then reactor.setActive(true) end
+                  monitor.setBackgroundColour((colours.yellow))
+                  monitor.setCursorPos(1,4)
+                  monitor.write(" ON ")
+                  monitor.setBackgroundColour((colours.grey))
+                  monitor.setCursorPos(5,4)
+                  monitor.write(" OFF ")
+                  monitor.setBackgroundColour((colours.black))
+              end
             end
         end
     end
