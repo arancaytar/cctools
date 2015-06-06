@@ -296,30 +296,32 @@ while true do
             monitor.write("of:")
             monitor.setCursorPos(eMaxXSmall,5)
             monitor.write(eMaxValue..eMaxSuffixSmall)
-            if fill > upper then
-                --Energy level is over upper level, turning redstone/reactors off
-                if redstoneSide ~= "none" then redstone.setOutput(redstoneSide, false) end
-                if turbine ~= nil then turbine.setActive(false) end
-                if reactor ~= nil then reactor.setActive(false) end
-                monitor.setBackgroundColour((colours.grey))
-                monitor.setCursorPos(1,4)
-                monitor.write(" ON ")
-                monitor.setBackgroundColour((colours.green))
-                monitor.setCursorPos(5,4)
-                monitor.write(" OFF ")
-                monitor.setBackgroundColour((colours.black))
-            elseif fill < lower then
-                --Energy level is below lower limit, turning redstone/reactors on
-                if redstoneSide ~= "none" then redstone.setOutput(redstoneSide, true) end
-                if turbine ~= nil then turbine.setActive(true) end
-                if reactor ~= nil then reactor.setActive(true) end
-                monitor.setBackgroundColour((colours.green))
-                monitor.setCursorPos(1,4)
-                monitor.write(" ON ")
-                monitor.setBackgroundColour((colours.grey))
-                monitor.setCursorPos(5,4)
-                monitor.write(" OFF ")
-                monitor.setBackgroundColour((colours.black))
+            if redstoneSide ~= "none" then
+                if fill > upper then
+                    --Energy level is over upper level, turning redstone/reactors off
+                    redstone.setOutput(redstoneSide, false)
+                    if turbine ~= nil then turbine.setActive(false) end
+                    if reactor ~= nil then reactor.setActive(false) end
+                    monitor.setBackgroundColour((colours.grey))
+                    monitor.setCursorPos(1,4)
+                    monitor.write(" ON ")
+                    monitor.setBackgroundColour((colours.green))
+                    monitor.setCursorPos(5,4)
+                    monitor.write(" OFF ")
+                    monitor.setBackgroundColour((colours.black))
+                elseif fill < lower then
+                    --Energy level is below lower limit, turning redstone/reactors on
+                    redstone.setOutput(redstoneSide, true)
+                    if turbine ~= nil then turbine.setActive(true) end
+                    if reactor ~= nil then reactor.setActive(true) end
+                    monitor.setBackgroundColour((colours.green))
+                    monitor.setCursorPos(1,4)
+                    monitor.write(" ON ")
+                    monitor.setBackgroundColour((colours.grey))
+                    monitor.setCursorPos(5,4)
+                    monitor.write(" OFF ")
+                    monitor.setBackgroundColour((colours.black))
+                end
             end
         end
     end
