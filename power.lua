@@ -284,8 +284,10 @@ while true do
             monitor.setCursorPos(10,5)
             monitor.write("       ")
             --write constant/new data
-            monitor.setCursorPos(2,2)
-            monitor.write("Engines:")
+            if redstoneSide ~= "none" then
+                monitor.setCursorPos(2,2)
+                monitor.write("Engines:")
+            end
             monitor.setCursorPos(11,2)
             monitor.write("Storage:")
             monitor.setCursorPos(eNowXSmall,3)
