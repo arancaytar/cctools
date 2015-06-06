@@ -323,6 +323,7 @@ while true do
                   monitor.setBackgroundColour((colours.black))
               end
             end
+          end
         end
     end
     sleep(1)
