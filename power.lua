@@ -268,13 +268,13 @@ while true do
             for i = 1, math.ceil(fill * 10) do
                 monitor.setBackgroundColour((colours.green))
                 monitor.setCursorPos(24,12-i)
-                monitor.write(" ")
+                monitor.write("  ")
                 monitor.setBackgroundColour((colours.black))
             end
             for i = 1, 10 - math.ceil(fill * 10) do
                 monitor.setBackgroundColour((colours.red))
                 monitor.setCursorPos(24,1+i)
-                monitor.write(" ")
+                monitor.write("  ")
                 monitor.setBackgroundColour((colours.black))
             end
         elseif getMonitorSize(monitor.getSize()) == "small" then
