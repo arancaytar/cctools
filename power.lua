@@ -225,6 +225,8 @@ while true do
         local monitor=peripheral.wrap(connectedMonitors[i])
 
         if getMonitorSize(monitor.getSize()) == "large" then
+            monitor.setCursorPos(8, 1)
+            monitor.write("Power Status")
             --Erase old data
             monitor.setCursorPos(10,9)
             monitor.write("       ")
@@ -270,16 +272,24 @@ while true do
                     monitor.setBackgroundColour((colours.black))
                 end
             end
-            for i = 1, math.ceil(fill * 10) do
+            for i = 1, math.ceil(fill * 20) do
                 monitor.setBackgroundColour((colours.green))
-                monitor.setCursorPos(24,12-i)
-                monitor.write("  ")
+                monitor.setCursorPos(4+i,3)
+                monitor.write(" ")
+                monitor.setCursorPos(4+i,4)
+                monitor.write(" ")
+                monitor.setCursorPos(4+i,5)
+                monitor.write(" ")
                 monitor.setBackgroundColour((colours.black))
             end
-            for i = 1, 10 - math.ceil(fill * 10) do
+            for i = 1, 10 - math.ceil(fill * 20) do
                 monitor.setBackgroundColour((colours.red))
-                monitor.setCursorPos(24,1+i)
-                monitor.write("  ")
+                monitor.setCursorPos(4+i,3)
+                monitor.write(" ")
+                monitor.setCursorPos(4+i,4)
+                monitor.write(" ")
+                monitor.setCursorPos(4+i,5)
+                monitor.write(" ")
                 monitor.setBackgroundColour((colours.black))
             end
         elseif getMonitorSize(monitor.getSize()) == "small" then
