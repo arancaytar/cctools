@@ -136,11 +136,11 @@ if turbine ~= nil then turbine.setActive(false) end
 if reactor ~= nil then reactor.setActive(false) end
 
 --Write default engine status to all attached monitors
+monitor.clear()
 if redstoneSide ~= "none" then
     for i = 1, #connectedMonitors do
         local monitor = peripheral.wrap(connectedMonitors[i])
         if getMonitorSize(monitor.getSize()) == "large" then
-            monitor.clear()
             monitor.setBackgroundColour((colours.grey))
             monitor.setCursorPos(11,4)
             monitor.write(" ON ")
@@ -149,7 +149,6 @@ if redstoneSide ~= "none" then
             monitor.write(" OFF ")
             monitor.setBackgroundColour((colours.black))
         else
-            monitor.clear()
             monitor.setBackgroundColour((colours.grey))
             monitor.setCursorPos(1,4)
             monitor.write(" ON ")
