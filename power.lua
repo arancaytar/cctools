@@ -296,9 +296,9 @@ while true do
                     if 3*i+j > fill * 100 then
                         monitor.setBackgroundColour((colours.red))
                     end
+                    monitor.setCursorPos(2+i,3+j)
+                    monitor.write(" ")
                 end
-                monitor.setCursorPos(2+i,3+j)
-                monitor.write(" ")
             end
             monitor.setBackgroundColour((colours.black))
             if fill == 1 then
