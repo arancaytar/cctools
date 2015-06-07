@@ -302,9 +302,9 @@ while true do
             end
             monitor.setBackgroundColour((colours.black))
             if fill == 1 then
-                monitor.setCursorPos(13, 6)
+                monitor.setCursorPos(13, 8)
             elseif fill >= 0.1 then
-                monitor.setCursorPos(14, 6)
+                monitor.setCursorPos(14, 8)
             else monitor.setCursorPos(15, 8) end
             monitor.write(string.format("%d%%", math.floor(fill * 100)+0.5))
         elseif getMonitorSize(monitor.getSize()) == "small" then
