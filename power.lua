@@ -163,8 +163,11 @@ if redstoneSide ~= "none" then
     end
 end
 
+fill = 0
+
 --Main loop
 while true do
+    last = fill
 
   --Get all dynamic values
     --Get storage values
@@ -183,7 +186,7 @@ while true do
     end
 
     --Compute engine activation ratio
-    local fill = eNow / eMax
+    fill = eNow / eMax
 
     --Set storage scale
     if eNow >= 1000000000 then eNowScale = "billion"
@@ -218,8 +221,8 @@ while true do
     if eNowSuffixLarge ~= " RF" then eNowXLarge = 8 - eNowDigitCount
     else eNowXLarge = 9 - eNowDigitCount end
     eNowXSmall = 16 - eNowDigitCount
-    if eMaxSuffixLarge ~= " RF" then eMaxXLarge = 26 - eMaxDigitCount
-    else eMaxXLarge = 27 - eMaxDigitCount end
+    if eMaxSuffixLarge ~= " RF" then eMaxXLarge = 25 - eMaxDigitCount
+    else eMaxXLarge = 26 - eMaxDigitCount end
     eMaxXSmall = 16 - eMaxDigitCount
 
     --Loop to write to every monitor
@@ -249,6 +252,16 @@ while true do
             monitor.write("Capacity:")
             monitor.setCursorPos(eMaxXLarge,8)
             monitor.write(eMaxValue..eMaxSuffixLarge)
+
+            monitor.setCursorPos(11, 10)
+            if (last - fill >= 0) then
+                monitor.setBackgroundColour((colours.green))
+                monitor.write(" Rising  ")
+            else
+                monitor.setBackgroundColour((colours.red))
+                monitor.write(" Falling ")
+            end
+
             if redstoneSide ~= "none" then
                 if fill > upper then
                     --Energy level is over upper level, turning redstone/reactors off
