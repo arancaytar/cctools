@@ -233,7 +233,7 @@ while true do
             monitor.setCursorPos(9, 1)
             monitor.write("Power Status")
             --Erase old data
-            monitor.setCursorPos(13,7)
+            monitor.setCursorPos(13,8)
             monitor.write("    ")
             monitor.setCursorPos(3,9)
             monitor.write("       ")
