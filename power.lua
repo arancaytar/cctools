@@ -233,27 +233,23 @@ while true do
             monitor.setCursorPos(9, 1)
             monitor.write("Power Status")
             --Erase old data
-            monitor.setCursorPos(10,9)
-            monitor.write("       ")
-            monitor.setCursorPos(10,11)
-            monitor.write("       ")
-            monitor.setCursorPos(13,6)
+            monitor.setCursorPos(13,7)
             monitor.write("    ")
+            monitor.setCursorPos(3,9)
+            monitor.write("       ")
+            monitor.setCursorPos(20,9)
+            monitor.write("       ")
             --Write constant/new data
-            if redstoneSide ~= "none" then
-                monitor.setCursorPos(12,2)
-                monitor.write("Engines:")
-            end
-            monitor.setCursorPos(3,7)
+            monitor.setCursorPos(3,8)
             monitor.write("Storage:")
-            monitor.setCursorPos(eNowXLarge,8)
+            monitor.setCursorPos(eNowXLarge,9)
             monitor.write(eNowValue..eNowSuffixLarge)
-            monitor.setCursorPos(20,7)
+            monitor.setCursorPos(20,8)
             monitor.write("Capacity:")
-            monitor.setCursorPos(eMaxXLarge,8)
+            monitor.setCursorPos(eMaxXLarge,9)
             monitor.write(eMaxValue..eMaxSuffixLarge)
 
-            monitor.setCursorPos(11, 10)
+            monitor.setCursorPos(11, 11)
             if (last - fill <= 0) then
                 monitor.setBackgroundColour((colours.green))
                 if (last - fill < 0) then
@@ -265,6 +261,7 @@ while true do
                 monitor.setBackgroundColour((colours.red))
                 monitor.write(" Falling ")
             end
+
 
             if redstoneSide ~= "none" then
                 if fill > upper then
@@ -294,16 +291,13 @@ while true do
                 end
             end
             monitor.setBackgroundColour((colours.green))
-            for i = 1, 20 do
-                if i > fill * 20 then
-                    monitor.setBackgroundColour((colours.red))
+            for i = 1, 25 do
+                for j = 0, 4 do
+                    if 3*i+j > fill * 100 then
+                        monitor.setBackgroundColour((colours.red))
+                    end
                 end
-                monitor.setCursorPos(4+i,3)
-                monitor.write(" ")
-                if 2*i+1 > fill * 40 then
-                    monitor.setBackgroundColour((colours.red))
-                end
-                monitor.setCursorPos(4+i,4)
+                monitor.setCursorPos(2+i,3+j)
                 monitor.write(" ")
             end
             monitor.setBackgroundColour((colours.black))
@@ -311,8 +305,8 @@ while true do
                 monitor.setCursorPos(13, 6)
             elseif fill >= 0.1 then
                 monitor.setCursorPos(14, 6)
-            else monitor.setCursorPos(15, 6) end
-            monitor.write(string.format("%d%%", math.floor(fill * 100)))
+            else monitor.setCursorPos(15, 8) end
+            monitor.write(string.format("%d%%", math.floor(fill * 100)+0.5))
         elseif getMonitorSize(monitor.getSize()) == "small" then
             --erase old data
             monitor.setCursorPos(10,3)
