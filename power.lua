@@ -218,7 +218,7 @@ while true do
     if eNowSuffixLarge ~= " RF" then eNowXLarge = 8 - eNowDigitCount
     else eNowXLarge = 9 - eNowDigitCount end
     eNowXSmall = 16 - eNowDigitCount
-    if eMaxSuffixLarge ~= " RF" then eMaxXLarge = 8 - eMaxDigitCount
+    if eMaxSuffixLarge ~= " RF" then eMaxXLarge = 26 - eMaxDigitCount
     else eMaxXLarge = 27 - eMaxDigitCount end
     eMaxXSmall = 16 - eMaxDigitCount
 
