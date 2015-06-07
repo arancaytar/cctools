@@ -215,11 +215,11 @@ while true do
     for digit in string.gmatch(eMaxValue, "%d") do eMaxDigitCount = eMaxDigitCount + 1 end
 
     --Get location to write
-    if eNowSuffixLarge ~= " RF" then eNowXLarge = 17 - eNowDigitCount
-    else eNowXLarge = 18 - eNowDigitCount end
+    if eNowSuffixLarge ~= " RF" then eNowXLarge = 8 - eNowDigitCount
+    else eNowXLarge = 9 - eNowDigitCount end
     eNowXSmall = 16 - eNowDigitCount
-    if eMaxSuffixLarge ~= " RF" then eMaxXLarge = 17 - eMaxDigitCount
-    else eMaxXLarge = 18 - eMaxDigitCount end
+    if eMaxSuffixLarge ~= " RF" then eMaxXLarge = 8 - eMaxDigitCount
+    else eMaxXLarge = 27 - eMaxDigitCount end
     eMaxXSmall = 16 - eMaxDigitCount
 
     --Loop to write to every monitor
@@ -234,18 +234,20 @@ while true do
             monitor.write("       ")
             monitor.setCursorPos(10,11)
             monitor.write("       ")
+            monitor.setCursorPos(13,6)
+            monitor.write("    ")
             --Write constant/new data
             if redstoneSide ~= "none" then
                 monitor.setCursorPos(12,2)
                 monitor.write("Engines:")
             end
-            monitor.setCursorPos(12,7)
+            monitor.setCursorPos(3,7)
             monitor.write("Storage:")
-            monitor.setCursorPos(eNowXLarge,9)
+            monitor.setCursorPos(eNowXLarge,8)
             monitor.write(eNowValue..eNowSuffixLarge)
-            monitor.setCursorPos(eMaxXLarge,10)
-            monitor.write("of:")
-            monitor.setCursorPos(eMaxXLarge,11)
+            monitor.setCursorPos(20,7)
+            monitor.write("Capacity:")
+            monitor.setCursorPos(eMaxXLarge,8)
             monitor.write(eMaxValue..eMaxSuffixLarge)
             if redstoneSide ~= "none" then
                 if fill > upper then
