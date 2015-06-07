@@ -291,12 +291,12 @@ while true do
                 end
             end
             monitor.setBackgroundColour((colours.green))
-            for i = 1, 25 do
+            for i = 0, 24 do
                 for j = 0, 3 do
-                    if 3*i+j > fill * 100 then
+                    if 4*i+j > fill * 100 then
                         monitor.setBackgroundColour((colours.red))
                     end
-                    monitor.setCursorPos(2+i,3+j)
+                    monitor.setCursorPos(3+i,3+j)
                     monitor.write(" ")
                 end
             end
