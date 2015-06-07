@@ -254,9 +254,13 @@ while true do
             monitor.write(eMaxValue..eMaxSuffixLarge)
 
             monitor.setCursorPos(11, 10)
-            if (last - fill >= 0) then
+            if (last - fill <= 0) then
                 monitor.setBackgroundColour((colours.green))
-                monitor.write(" Rising  ")
+                if (last - fill < 0) then
+                    monitor.write(" Rising  ")
+                else
+                    monitor.write(" Holding ")
+                end
             else
                 monitor.setBackgroundColour((colours.red))
                 monitor.write(" Falling ")
