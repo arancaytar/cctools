@@ -282,7 +282,7 @@ while true do
                 monitor.write(" ")
                 monitor.setBackgroundColour((colours.black))
             end
-            for i = 1, 10 - math.ceil(fill * 20) do
+            for i = 1, 20 - math.ceil(fill * 20) do
                 monitor.setBackgroundColour((colours.red))
                 monitor.setCursorPos(4+i,3)
                 monitor.write(" ")
@@ -295,7 +295,7 @@ while true do
             elseif fill >= 0.1 then
                 monitor.setCursorPos(14, 6)
             else monitor.setCursorPos(15, 6) end
-            monitor.write(string.format("%f%%", math.floor(fill * 100)))
+            monitor.write(string.format("%d%%", math.floor(fill * 100)))
         elseif getMonitorSize(monitor.getSize()) == "small" then
             --erase old data
             monitor.setCursorPos(10,3)
