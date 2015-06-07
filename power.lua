@@ -292,7 +292,7 @@ while true do
             end
             monitor.setBackgroundColour((colours.green))
             for i = 1, 25 do
-                for j = 0, 4 do
+                for j = 0, 3 do
                     if 3*i+j > fill * 100 then
                         monitor.setBackgroundColour((colours.red))
                     end
