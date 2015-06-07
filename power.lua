@@ -293,22 +293,20 @@ while true do
                     monitor.setBackgroundColour((colours.black))
                 end
             end
-            for i = 1, math.ceil(fill * 20) do
-                monitor.setBackgroundColour((colours.green))
+            monitor.setBackgroundColour((colours.green))
+            for i = 1, 20 do
+                if i > fill * 20 then
+                    monitor.setBackgroundColour((colours.red))
+                end
                 monitor.setCursorPos(4+i,3)
                 monitor.write(" ")
+                if 2*i+1 > fill * 40 then
+                    monitor.setBackgroundColour((colours.red))
+                end
                 monitor.setCursorPos(4+i,4)
                 monitor.write(" ")
-                monitor.setBackgroundColour((colours.black))
             end
-            for i = 1, 20 - math.ceil(fill * 20) do
-                monitor.setBackgroundColour((colours.red))
-                monitor.setCursorPos(4+20-i,3)
-                monitor.write(" ")
-                monitor.setCursorPos(4+20-i,4)
-                monitor.write(" ")
-                monitor.setBackgroundColour((colours.black))
-            end
+            monitor.setBackgroundColour((colours.black))
             if fill == 1 then
                 monitor.setCursorPos(13, 6)
             elseif fill >= 0.1 then
