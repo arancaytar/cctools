@@ -284,9 +284,9 @@ while true do
             end
             for i = 1, 20 - math.ceil(fill * 20) do
                 monitor.setBackgroundColour((colours.red))
-                monitor.setCursorPos(4+i,3)
+                monitor.setCursorPos(4+20-i,3)
                 monitor.write(" ")
-                monitor.setCursorPos(4+i,4)
+                monitor.setCursorPos(4+20-i,4)
                 monitor.write(" ")
                 monitor.setBackgroundColour((colours.black))
             end
