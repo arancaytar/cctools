@@ -17,6 +17,8 @@ local upper = 0.98 --Upper limit for computer to stop transmitting redstone sign
 local lower = 0.05 --Lower limit for computer to start transmitting redstone signal.
 local redstoneSide = "none" -- Change this to the side you want to output the redstone signal to. ["left","right","top","bottom","front","back","none"]
 local capacitorBankBlocks = 0 -- If you have OpenPeripherals without Computronics you need to specify how many blocks your Capacitor Bank contains. Only works properly for one Capacitor Bank. If you have Computronics, this variable won't do anything.
+local url = "http://ermarian.net/resources/minecraft/iridium/power"
+local httpDelay = 60
 
 --Don't change these:
 cellCount = 0
@@ -164,6 +166,7 @@ if redstoneSide ~= "none" then
 end
 
 fill = 0
+Sent = 0
 
 --Main loop
 while true do
@@ -183,6 +186,12 @@ while true do
         cell = peripheral.wrap(connectedOPCapBank)
         eNow = (eNow + cell.getEnergyStored()) * capacitorBankBlocks
         eMax = (eMax + cell.getMaxEnergyStored()) * capacitorBankBlocks
+    end
+
+    local time = os.clock()
+    if httpDelay > 0 and time - sent >= httpDelay then
+        http.post(url, "day="..os.day().."&time="..os.time().."&eNow="..eNow.."&eMax="..eMax)
+        sent = time
     end
 
     --Compute engine activation ratio
