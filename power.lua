@@ -166,7 +166,7 @@ if redstoneSide ~= "none" then
 end
 
 fill = 0
-Sent = 0
+sent = 0
 
 --Main loop
 while true do
