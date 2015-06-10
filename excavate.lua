@@ -2,13 +2,14 @@
 -- CraftOS (http://computercraft.info/)
 
 local tArgs = { ... }
-if #tArgs ~= 1 then
-	print( "Usage: excavate <diameter>" )
+if #tArgs < 1 then
+	print( "Usage: excavate <diameter> [<depth>]" )
 	return
 end
 
 -- Mine in a quarry pattern until we hit something we can't dig
 local size = tonumber( tArgs[1] )
+local maxDepth = tonumber ( tArgs[2] ) or 0
 if size < 1 then
 	print( "Excavate diameter must be positive" )
 	return
@@ -150,6 +151,10 @@ local function tryForwards()
 end
 
 local function tryDown()
+	if depth == maxDepth then
+		print( "Maximum depth "..depth.." reached." )
+		return false
+
 	if not refuel() then
 		print( "Not enough Fuel" )
 		returnSupplies()
