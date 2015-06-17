@@ -2,16 +2,17 @@
 -- CraftOS (http://computercraft.info/)
 
 local tArgs = { ... }
-if #tArgs < 1 then
-	print( "Usage: excavate <diameter> [<depth>]" )
+if #tArgs < 2 then
+	print( "Usage: excavate <forward> <right> [<depth>]" )
 	return
 end
 
 -- Mine in a quarry pattern until we hit something we can't dig
-local size = tonumber( tArgs[1] )
-local maxDepth = tonumber ( tArgs[2] ) or 0
-if size < 1 then
-	print( "Excavate diameter must be positive" )
+local mForward = tonumber( tArgs[1] )
+local mRight = tonumber( tArgs[2] )
+local mDepth = tonumber ( tArgs[3] ) or 256
+if mForward * mRight * mDepth == 0 then
+	print( "Excavate dimensions must be non-zero." )
 	return
 end
 	
@@ -151,37 +152,55 @@ local function tryForwards()
 end
 
 local function tryDown()
-	if depth == maxDepth then
+	if math.abs(depth) >= math.abs(mDepth) then
 		print( "Maximum depth "..depth.." reached." )
 		return false
+  end
 
 	if not refuel() then
 		print( "Not enough Fuel" )
 		returnSupplies()
 	end
-	
-	while not turtle.down() do
-		if turtle.detectDown() then
-			if turtle.digDown() then
-				if not collect() then
-					returnSupplies()
-				end
-			else
-				return false
-			end
-		elseif turtle.attackDown() then
-			if not collect() then
-				returnSupplies()
-			end
-		else
-			sleep( 0.5 )
-		end
-	end
 
-	depth = depth + 1
-	if math.fmod( depth, 10 ) == 0 then
-		print( "Descended "..depth.." metres." )
-	end
+  if (mDepth > 0) then
+	  while not turtle.down() do
+		  if turtle.detectDown() then
+			  if turtle.digDown() then
+				  if not collect() then
+					  returnSupplies()
+				  end
+			  else
+				  return false
+			  end
+		  elseif turtle.attackDown() then
+			  if not collect() then
+				  returnSupplies()
+			  end
+		  else
+			  sleep( 0.5 )
+		  end
+	  end
+	  depth = depth + 1
+  else
+	  while not turtle.up() do
+		  if turtle.detectUp() then
+			  if turtle.digUp() then
+				  if not collect() then
+					  returnSupplies()
+				  end
+			  else
+				  return false
+			  end
+		  elseif turtle.attackUp() then
+			  if not collect() then
+				  returnSupplies()
+			  end
+		  else
+			  sleep( 0.5 )
+		  end
+	  end
+	  depth = depth - 1
+  end
 
 	return true
 end
@@ -294,8 +313,8 @@ end
 local alternate = 0
 local done = false
 while not done do
-	for n=1,size do
-		for m=1,size-1 do
+	for n=1,mRight do
+		for m=1,mForward do
 			if not tryForwards() then
 				done = true
 				break
@@ -304,7 +323,7 @@ while not done do
 		if done then
 			break
 		end
-		if n<size then
+		if n<mRight then
 			if math.fmod(n + alternate,2) == 0 then
 				turnLeft()
 				if not tryForwards() then
@@ -326,18 +345,7 @@ while not done do
 		break
 	end
 	
-	if size > 1 then
-		if math.fmod(size,2) == 0 then
-			turnRight()
-		else
-			if alternate == 0 then
-				turnLeft()
-			else
-				turnRight()
-			end
-			alternate = 1 - alternate
-		end
-	end
+	goTo ( 0,depth,0,0,1 )
 	
 	if not tryDown() then
 		done = true
