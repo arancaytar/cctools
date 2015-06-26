@@ -142,14 +142,12 @@ for i = 1, #connectedMonitors do
     local monitor = peripheral.wrap(connectedMonitors[i])
     monitor.clear()
 end
-if fill < upper then
-    engines = true
-    if redstoneSide ~= "none" then
-        redstone.setOutput(redstoneSide, true)
-    end
-    if turbine ~= nil then turbine.setActive(true) end
-    if reactor ~= nil then reactor.setActive(true) end
+engines = true
+if redstoneSide ~= "none" then
+  redstone.setOutput(redstoneSide, true)
 end
+if turbine ~= nil then turbine.setActive(true) end
+if reactor ~= nil then reactor.setActive(true) end
 fill = 0
 sent = 0
 
