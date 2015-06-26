@@ -234,6 +234,24 @@ while true do
     else eMaxXLarge = 26 - eMaxDigitCount end
     eMaxXSmall = 16 - eMaxDigitCount
 
+    if fill > upper then
+        --Energy level is over upper level, turning redstone/reactors off
+        if redstoneSide ~= "none" then
+            redstone.setOutput(redstoneSide, false)
+        end
+        if turbine ~= nil then turbine.setActive(false) end
+        if reactor ~= nil then reactor.setActive(false) end
+        engines = false
+    elseif fill < lower then
+        --Energy level is below lower limit, turning redstone/reactors on
+        if redstoneSide ~= "none" then
+            redstone.setOutput(redstoneSide, true)
+        end
+        if turbine ~= nil then turbine.setActive(true) end
+        if reactor ~= nil then reactor.setActive(true) end
+        engines = true
+    end
+
     --Loop to write to every monitor
     for i = 1, #connectedMonitors do
         local monitor=peripheral.wrap(connectedMonitors[i])
@@ -258,7 +276,7 @@ while true do
             monitor.setCursorPos(eMaxXLarge,9)
             monitor.write(eMaxValue..eMaxSuffixLarge)
 
-            monitor.setCursorPos(11, 11)
+            monitor.setCursorPos(5, 11)
             if (last - fill <= 0) then
                 monitor.setBackgroundColour((colours.green))
                 if (last - fill < 0) then
@@ -271,34 +289,14 @@ while true do
                 monitor.write(" Falling ")
             end
 
-
-            if redstoneSide ~= "none" then
-                if fill > upper then
-                    --Energy level is over upper level, turning redstone/reactors off
-                    redstone.setOutput(redstoneSide, false)
-                    if turbine ~= nil then turbine.setActive(false) end
-                    if reactor ~= nil then reactor.setActive(false) end
-                    monitor.setBackgroundColour((colours.grey))
-                    monitor.setCursorPos(11,4)
-                    monitor.write(" ON ")
-                    monitor.setBackgroundColour((colours.green))
-                    monitor.setCursorPos(15,4)
-                    monitor.write(" OFF ")
-                    monitor.setBackgroundColour((colours.black))
-                elseif fill < lower then
-                    --Energy level is below lower limit, turning redstone/reactors on
-                    redstone.setOutput(redstoneSide, true)
-                    if turbine ~= nil then turbine.setActive(true) end
-                    if reactor ~= nil then reactor.setActive(true) end
-                    monitor.setBackgroundColour((colours.green))
-                    monitor.setCursorPos(11,4)
-                    monitor.write(" ON ")
-                    monitor.setBackgroundColour((colours.grey))
-                    monitor.setCursorPos(15,4)
-                    monitor.write(" OFF ")
-                    monitor.setBackgroundColour((colours.black))
-                end
+            monitor.setCursorPos(16, 11)
+            if engines then
+                monitor.setBackgroundColour((colours.yellow))
+            else
+                monitor.setBackgroundColour((colours.grey))
             end
+            monitor.write(" Reactor ")
+
             monitor.setBackgroundColour((colours.green))
             for i = 0, 24 do
                 for j = 0, 3 do
@@ -323,9 +321,24 @@ while true do
             monitor.setCursorPos(10,5)
             monitor.write("       ")
             --write constant/new data
-            if redstoneSide ~= "none" then
-                monitor.setCursorPos(2,2)
-                monitor.write("Engines:")
+            monitor.setCursorPos(2,2)
+            monitor.write("Engines:")
+            if engines then
+                monitor.setBackgroundColour((colours.green))
+                monitor.setCursorPos(1,4)
+                monitor.write(" ON ")
+                monitor.setBackgroundColour((colours.grey))
+                monitor.setCursorPos(5,4)
+                monitor.write(" OFF ")
+                monitor.setBackgroundColour((colours.black))
+            else
+                monitor.setBackgroundColour((colours.grey))
+                monitor.setCursorPos(1,4)
+                monitor.write(" ON ")
+                monitor.setBackgroundColour((colours.green))
+                monitor.setCursorPos(5,4)
+                monitor.write(" OFF ")
+                monitor.setBackgroundColour((colours.black))
             end
             monitor.setCursorPos(11,2)
             monitor.write("Storage:")
@@ -335,33 +348,6 @@ while true do
             monitor.write("of:")
             monitor.setCursorPos(eMaxXSmall,5)
             monitor.write(eMaxValue..eMaxSuffixSmall)
-            if redstoneSide ~= "none" then
-                if fill > upper then
-                    --Energy level is over upper level, turning redstone/reactors off
-                    redstone.setOutput(redstoneSide, false)
-                    if turbine ~= nil then turbine.setActive(false) end
-                    if reactor ~= nil then reactor.setActive(false) end
-                    monitor.setBackgroundColour((colours.grey))
-                    monitor.setCursorPos(1,4)
-                    monitor.write(" ON ")
-                    monitor.setBackgroundColour((colours.green))
-                    monitor.setCursorPos(5,4)
-                    monitor.write(" OFF ")
-                    monitor.setBackgroundColour((colours.black))
-                elseif fill < lower then
-                    --Energy level is below lower limit, turning redstone/reactors on
-                    redstone.setOutput(redstoneSide, true)
-                    if turbine ~= nil then turbine.setActive(true) end
-                    if reactor ~= nil then reactor.setActive(true) end
-                    monitor.setBackgroundColour((colours.green))
-                    monitor.setCursorPos(1,4)
-                    monitor.write(" ON ")
-                    monitor.setBackgroundColour((colours.grey))
-                    monitor.setCursorPos(5,4)
-                    monitor.write(" OFF ")
-                    monitor.setBackgroundColour((colours.black))
-                end
-            end
         end
     end
     sleep(1)
