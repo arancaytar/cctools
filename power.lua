@@ -13,12 +13,12 @@ Changelog/README: http://pastebin.com/erPf3t4t
 --]]
 
 --You can change these:
-local upper = 0.98 --Upper limit for computer to stop transmitting redstone signal. 0.98=98% full.
-local lower = 0.05 --Lower limit for computer to start transmitting redstone signal.
+local upper = 0.90 --Upper limit for computer to stop transmitting redstone signal. 0.98=98% full.
+local lower = 0.45 --Lower limit for computer to start transmitting redstone signal.
 local redstoneSide = "none" -- Change this to the side you want to output the redstone signal to. ["left","right","top","bottom","front","back","none"]
 local capacitorBankBlocks = 0 -- If you have OpenPeripherals without Computronics you need to specify how many blocks your Capacitor Bank contains. Only works properly for one Capacitor Bank. If you have Computronics, this variable won't do anything.
 local url = "http://ermarian.net/resources/minecraft/iridium/power"
-local httpDelay = 120
+local httpDelay = 180
 
 --Don't change these:
 cellCount = 0
@@ -137,34 +137,19 @@ if redstoneSide ~= "none" then redstone.setOutput(redstoneSide, false) end
 if turbine ~= nil then turbine.setActive(false) end
 if reactor ~= nil then reactor.setActive(false) end
 
---Write default engine status to all attached monitors
+--Clear all monitors
 for i = 1, #connectedMonitors do
     local monitor = peripheral.wrap(connectedMonitors[i])
     monitor.clear()
 end
-if redstoneSide ~= "none" then
-    for i = 1, #connectedMonitors do
-        local monitor = peripheral.wrap(connectedMonitors[i])
-        if getMonitorSize(monitor.getSize()) == "large" then
-            monitor.setBackgroundColour((colours.grey))
-            monitor.setCursorPos(11,4)
-            monitor.write(" ON ")
-            monitor.setBackgroundColour((colours.green))
-            monitor.setCursorPos(15,4)
-            monitor.write(" OFF ")
-            monitor.setBackgroundColour((colours.black))
-        else
-            monitor.setBackgroundColour((colours.grey))
-            monitor.setCursorPos(1,4)
-            monitor.write(" ON ")
-            monitor.setBackgroundColour((colours.green))
-            monitor.setCursorPos(5,4)
-            monitor.write(" OFF ")
-            monitor.setBackgroundColour((colours.black))
-        end
+if fill < upper then
+    engines = true
+    if redstoneSide ~= "none" then
+        redstone.setOutput(redstoneSide, true)
     end
+    if turbine ~= nil then turbine.setActive(true) end
+    if reactor ~= nil then reactor.setActive(true) end
 end
-
 fill = 0
 sent = 0
 
@@ -289,7 +274,7 @@ while true do
                 monitor.write(" Falling ")
             end
 
-            monitor.setCursorPos(16, 11)
+            monitor.setCursorPos(17, 11)
             if engines then
                 monitor.setBackgroundColour((colours.yellow))
             else
